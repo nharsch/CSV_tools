@@ -25,3 +25,18 @@ class CsvTable:
 			for row in self.dicter:
 				writer.writerow(row)
 
+class CsvWalker:
+	def __init__(self, csv_name, output_tag):
+		self.csv_name = csv_name #this is the filename
+		self.csv_file = open(csv_name, 'rU') #open file in Universal read line
+		self.csv_headers = csv.reader(self.csv_file).next()
+		self.DictReader = csv.DictReader(self.csv_file, fieldnames=self.csv_headers)
+		self.output_tag = output_tag
+		self.output_headers = self.csv_headers[:]
+
+	def start_writer(self):
+		self.output_csv = open(self.csv_name[:-4]+ self.output_tag + ".csv", 'wb')
+		self.DictWriter = csv.DictWriter(self.output_csv, fieldnames=self.output_headers)
+		self.DictWriter.writeheader()
+
+
