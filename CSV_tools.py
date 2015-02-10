@@ -26,6 +26,10 @@ class CsvTable:
 				writer.writerow(row)
 
 class CsvWalker:
+	'''
+	creates object that will read input CSV line by line and
+	write to output
+	'''
 	def __init__(self, csv_name, output_tag):
 		self.csv_name = csv_name #this is the filename
 		self.csv_file = open(csv_name, 'rU') #open file in Universal read line
