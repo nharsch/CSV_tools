@@ -25,6 +25,30 @@ class CsvTable:
 			for row in self.dicter:
 				writer.writerow(row)
 
+	def update(self, CsvTable2, shared_key):
+		'''
+		csv compare loop
+		returns 
+		assumes both lsiters are lists of dicts
+		'''
+		#check if shared key in both tables
+		assert shared_key in self.csv_headers
+		assert shared_key in CsvTable2.csv_headers
+
+		for header in CsvTable2.csv_headers:
+			if header not in self.csv_headers:
+				self.csv_headers.append(header)
+
+		for row2 in CsvTable2.dicter:
+			in_1 = False
+			for row1 in self.dicter:
+				if row2.get(shared_key) == row1.get(shared_key):
+					row1.update(row2)
+					#row1['updated_last'] = now
+					in_1 = True
+			if not in_1:
+				self.dicter.append(row2)
+
 class CsvWalker:
 	'''
 	creates object that will read input CSV line by line and
